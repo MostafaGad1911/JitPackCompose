@@ -142,7 +142,7 @@ fun Calculator() {
 
 }
 
-@
+
 
 fun String.mToast(context: Context) {
     Toast.makeText(context, this, Toast.LENGTH_LONG).show()
