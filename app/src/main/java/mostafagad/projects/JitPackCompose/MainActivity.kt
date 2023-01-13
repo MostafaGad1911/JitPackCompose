@@ -1,28 +1,33 @@
 package mostafagad.projects.JitPackCompose
 
 import android.content.Context
+import android.content.res.Resources.Theme
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import mostafagad.projects.JitPackCompose.ui.theme.BLACK
 import mostafagad.projects.JitPackCompose.ui.theme.ComposeFirstTheme
 import mostafagad.projects.compose.R
 
@@ -41,39 +46,39 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun DiceRollerApp() {
-    Calculator(
+    DiceRoller(
     )
 }
 
 @Composable
 fun Calculator() {
-    var firstInput by rememberSaveable  {
+    var firstInput by rememberSaveable {
         mutableStateOf(
             ""
         )
     }
 
-    var secondInput by rememberSaveable  {
+    var secondInput by rememberSaveable {
         mutableStateOf(
             ""
         )
     }
 
     var sum = 0f
-    if (firstInput.isNotEmpty() && secondInput.isNotEmpty())
-        sum = secondInput.toFloatOrNull()?.let { firstInput.toFloatOrNull()?.plus(it)}!!
+    if (firstInput.isNotEmpty() && secondInput.isNotEmpty()) sum =
+        secondInput.toFloatOrNull()?.let { firstInput.toFloatOrNull()?.plus(it) }!!
 
     var sub = 0f
-    if (firstInput.isNotEmpty() && secondInput.isNotEmpty())
-        sub = secondInput.toFloatOrNull()?.let { firstInput.toFloatOrNull()?.minus(it)}!!
+    if (firstInput.isNotEmpty() && secondInput.isNotEmpty()) sub =
+        secondInput.toFloatOrNull()?.let { firstInput.toFloatOrNull()?.minus(it) }!!
 
     var mul = 0f
-    if (firstInput.isNotEmpty() && secondInput.isNotEmpty())
-        mul = firstInput.toFloatOrNull()?.times(secondInput.toFloatOrNull()!!)!!
+    if (firstInput.isNotEmpty() && secondInput.isNotEmpty()) mul =
+        firstInput.toFloatOrNull()?.times(secondInput.toFloatOrNull()!!)!!
 
     var div = 0f
-    if (firstInput.isNotEmpty() && secondInput.isNotEmpty())
-        div = secondInput.toFloatOrNull()?.let { firstInput.toFloatOrNull()?.div(it) }!!
+    if (firstInput.isNotEmpty() && secondInput.isNotEmpty()) div =
+        secondInput.toFloatOrNull()?.let { firstInput.toFloatOrNull()?.div(it) }!!
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -83,6 +88,7 @@ fun Calculator() {
             .wrapContentSize(Alignment.Center)
             .padding(15.dp)
     ) {
+        CircularProgressIndicatorSample()
         val context = LocalContext.current
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
@@ -130,38 +136,50 @@ fun Calculator() {
         Button(modifier = Modifier.fillMaxWidth(), onClick = { div.toString().mToast(context) }) {
             Text(text = stringResource(id = R.string.div))
         }
-    }
 
-    @Composable
-    fun RollImg(modifier: Modifier = Modifier) {
-        var result by rememberSaveable  {
-            mutableStateOf(1)
-        }
-        val img = when (result) {
-            1 -> R.drawable.dice_1
-            2 -> R.drawable.dice_2
-            3 -> R.drawable.dice_3
-            4 -> R.drawable.dice_4
-            5 -> R.drawable.dice_5
-            else -> R.drawable.dice_6
-        }
-        Column(
-            modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(painter = painterResource(img), contentDescription = "1")
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = { result = (1..6).random() }) {
-                Text(text = stringResource(id = R.string.roll))
-            }
-
-        }
     }
 
 
 }
 
+@Composable
+fun DiceRoller(modifier: Modifier = Modifier.fillMaxSize()) {
+    var result by rememberSaveable {
+        mutableStateOf(1)
+    }
+    val img = when (result) {
+        1 -> R.drawable.dice_1
+        2 -> R.drawable.dice_2
+        3 -> R.drawable.dice_3
+        4 -> R.drawable.dice_4
+        5 -> R.drawable.dice_5
+        else -> R.drawable.dice_6
+    }
+    Column(
+        modifier = modifier.padding(15.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(painter = painterResource(img), contentDescription = "1")
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = { result = (1..6).random() }, modifier = Modifier.fillMaxWidth()) {
+            Text(text = stringResource(id = R.string.roll))
+        }
+
+    }
+}
+
 
 fun String.mToast(context: Context) {
     Toast.makeText(context, this, Toast.LENGTH_LONG).show()
+}
+
+
+@Composable
+fun CircularProgressIndicatorSample() {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        CircularProgressIndicator()
+        Spacer(Modifier.height(30.dp))
+    }
 }
 
