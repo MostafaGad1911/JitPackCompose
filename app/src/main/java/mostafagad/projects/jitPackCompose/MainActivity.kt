@@ -1,14 +1,8 @@
-package mostafagad.projects.JitPackCompose
+package mostafagad.projects.jitPackCompose
 
-import android.content.Context
-import android.content.res.Resources.Theme
-import android.graphics.Color
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
@@ -18,18 +12,15 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import mostafagad.projects.JitPackCompose.ui.theme.BLACK
-import mostafagad.projects.JitPackCompose.ui.theme.ComposeFirstTheme
+import mostafagad.projects.jitPackCompose.ui.theme.ComposeFirstTheme
 import mostafagad.projects.compose.R
+import mostafagad.projects.jitPackCompose.ui.theme.CircularProgressIndicatorSample
+import mostafagad.projects.jitPackCompose.ui.theme.mToast
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,7 +79,6 @@ fun Calculator() {
             .wrapContentSize(Alignment.Center)
             .padding(15.dp)
     ) {
-        CircularProgressIndicatorSample()
         val context = LocalContext.current
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
@@ -144,16 +134,4 @@ fun Calculator() {
 
 
 
-fun String.mToast(context: Context) {
-    Toast.makeText(context, this, Toast.LENGTH_LONG).show()
-}
-
-
-@Composable
-fun CircularProgressIndicatorSample() {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        CircularProgressIndicator()
-        Spacer(Modifier.height(30.dp))
-    }
-}
 

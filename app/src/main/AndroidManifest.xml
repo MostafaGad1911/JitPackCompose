@@ -12,7 +12,7 @@
         android:theme="@style/Theme.ComposeFirst"
         tools:targetApi="31">
         <activity
-            android:name="mostafagad.projects.JitPackCompose.MainActivity"
+            android:name="mostafagad.projects.jitPackCompose.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ComposeFirst">
