@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">ComposeFirst</string>
+    <string name="roll">Roll</string>
+    <string name="first_num">Enter first number</string>
+    <string name="second_num">Enter second number</string>
+    <string name="sum">Sum</string>
+    <string name="sub">Sub</string>
+    <string name="mul">Mul</string>
+    <string name="div">Div</string>
+
+</resources>
