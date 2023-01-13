@@ -1,10 +1,17 @@
-package mostafagad.projects.JitPackCompose.ui.theme
+package mostafagad.projects.jitPackCompose.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
 private val DarkColorPalette = darkColors(
     primary = Purple200,
@@ -41,4 +48,12 @@ fun ComposeFirstTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Comp
         shapes = Shapes,
         content = content
     )
+}
+
+@Composable
+fun CircularProgressIndicatorSample() {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        CircularProgressIndicator()
+        Spacer(Modifier.height(30.dp))
+    }
 }
