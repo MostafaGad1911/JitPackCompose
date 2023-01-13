@@ -1,4 +1,4 @@
-package mostafagad.projects.JitPackCompose.ui.theme
+package mostafagad.projects.jitPackCompose.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

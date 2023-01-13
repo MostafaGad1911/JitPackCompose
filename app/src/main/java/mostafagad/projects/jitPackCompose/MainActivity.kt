@@ -1,4 +1,4 @@
-package mostafagad.projects.JitPackCompose
+package mostafagad.projects.jitPackCompose
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import mostafagad.projects.JitPackCompose.ui.theme.ComposeFirstTheme
+import mostafagad.projects.jitPackCompose.ui.theme.ComposeFirstTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package mostafagad.projects.JitPackCompose
+package mostafagad.projects.jitPackCompose
 
 import org.junit.Test
 
