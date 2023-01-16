@@ -7,5 +7,10 @@
     <string name="sub">Sub</string>
     <string name="mul">Mul</string>
     <string name="div">Div</string>
+    <string name="cat">CAT</string>
+    <string name="dog">DOG</string>
+    <string name="elephant">ELEPHANT</string>
+    <string name="login_github">Login With Github</string>
+    <string name="github">github</string>
 
 </resources>
