@@ -1,7 +1,9 @@
 package mostafagad.projects.jitPackCompose.ui.activities
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -127,9 +129,9 @@ class MainActivity : ComponentActivity() {
         firebaseAuth
             .startActivityForSignInWithProvider( /* activity = */this, provider.build())
             .addOnSuccessListener {
-                val profile = it.additionalUserInfo?.profile
-                Log.i("GITHUB_PROFILE" , profile?.values.toString())
-            }
+                val profile = it.additionalUserInfo?.username
+                profile?.toast(this)
+             }
             .addOnFailureListener {
                 // Handle failure.
                 Log.i("LOGIN_EXCEPTION" , it.message.toString())
@@ -137,6 +139,10 @@ class MainActivity : ComponentActivity() {
 
     }
 
+}
+
+fun String.toast(ctx:Context){
+    Toast.makeText(ctx , this , Toast.LENGTH_LONG).show()
 }
 
 
