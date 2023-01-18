@@ -1,9 +1,8 @@
 package mostafagad.projects.jitPackCompose.ui.activities
 
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -32,11 +31,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.OAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import mostafagad.projects.compose.R
+import mostafagad.projects.jitPackCompose.helper.toast
 import mostafagad.projects.jitPackCompose.ui.theme.ComposeFirstTheme
 
-
-class MainActivity : ComponentActivity() {
+@AndroidEntryPoint
+class Login : ComponentActivity() {
 
     private var provider = OAuthProvider.newBuilder("github.com")
     private val firebaseAuth: FirebaseAuth by lazy { Firebase.auth }
@@ -64,9 +65,6 @@ class MainActivity : ComponentActivity() {
             LoginWithGithub()
         }
     }
-
-
-
 
 
     @Composable
@@ -130,19 +128,15 @@ class MainActivity : ComponentActivity() {
             .startActivityForSignInWithProvider( /* activity = */this, provider.build())
             .addOnSuccessListener {
                 val profile = it.additionalUserInfo?.username
-                profile?.toast(this)
-             }
+                startActivity(Intent(this, GitHubRepos::class.java).putExtra("user-name", profile))
+            }
             .addOnFailureListener {
                 // Handle failure.
-                Log.i("LOGIN_EXCEPTION" , it.message.toString())
+                Log.i("LOGIN_EXCEPTION", it.message.toString())
             }
 
     }
 
-}
-
-fun String.toast(ctx:Context){
-    Toast.makeText(ctx , this , Toast.LENGTH_LONG).show()
 }
 
 

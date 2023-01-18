@@ -12,5 +12,6 @@
     <string name="elephant">ELEPHANT</string>
     <string name="login_github">Login With Github</string>
     <string name="github">github</string>
+    <string name="fork">fork</string>
 
 </resources>
