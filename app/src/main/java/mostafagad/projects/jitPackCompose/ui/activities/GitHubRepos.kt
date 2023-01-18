@@ -1,6 +1,7 @@
 package mostafagad.projects.jitPackCompose.ui.activities
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -8,11 +9,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -36,7 +41,7 @@ class GitHubRepos : ComponentActivity() {
 
     private val composeVM: ComposeVM by viewModels()
 
-    private val userName:String? by lazy {
+    private val userName: String? by lazy {
         intent.getStringExtra("user-name")
     }
 
@@ -51,7 +56,7 @@ class GitHubRepos : ComponentActivity() {
                         .fillMaxSize()
                         .padding(10.dp), color = Color.White
                 ) {
-                    ReposRV(composeVM.myReposState)
+                    ReposRV()
                 }
             }
         }
@@ -59,38 +64,35 @@ class GitHubRepos : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        loadMyRepos()
     }
 
-    private fun loadMyRepos(){
+    private fun loadMyRepos() {
         CoroutineScope(Dispatchers.IO).launch {
             composeVM.getMyRepos(userName = userName!!)
         }
     }
 
 
-    @Preview(showBackground = true)
+
+
     @Composable
-    fun DefaultPreview() {
-        ComposeFirstTheme {
-            ReposRV(reposList = composeVM.myReposState)
+    private fun ReposRV() {
+        val repos by composeVM.myReposValue.collectAsState()
+        loadMyRepos()
+
+        LazyColumn (verticalArrangement = Arrangement.spacedBy(5.dp)){
+            items(items = repos, itemContent = {repo ->
+                Log.i("TEST_ITEM", repo.toString())
+                RepoItem(repo = repo)
+            })
         }
     }
 
-    @Composable
-    private fun ReposRV(reposList:List<Repository>){
-        LazyColumn{
-            itemsIndexed(items = reposList){ _, item ->
-                RepoItem(item)
-            }
-        }
-    }
 
     @Composable
-    private fun RepoItem(repo:Repository) {
-        Box(contentAlignment = Alignment.Center){
+    private fun RepoItem(repo: Repository) {
+        Box(contentAlignment = Alignment.Center) {
             Column {
-                Spacer(modifier = Modifier.height(5.dp))
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -104,6 +106,7 @@ class GitHubRepos : ComponentActivity() {
                     Image(
                         painter = rememberAsyncImagePainter(R.drawable.ic_github),
                         modifier = Modifier
+                            .padding(15.dp)
                             .height(90.dp)
                             .width(90.dp),
                         contentDescription = stringResource(
@@ -116,11 +119,11 @@ class GitHubRepos : ComponentActivity() {
                         modifier = Modifier
                             .width(0.dp)
                             .weight(1f)
-                            .padding(end = 10.dp),
+                            .padding(end = 20.dp),
                         maxLines = 1
                     )
                     Row(
-                        modifier = Modifier.padding(4.dp) ,
+                        modifier = Modifier.padding(4.dp),
                         horizontalArrangement = Arrangement.End,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
@@ -139,7 +142,7 @@ class GitHubRepos : ComponentActivity() {
 
                     }
                     Row(
-                        modifier = Modifier.padding(4.dp) ,
+                        modifier = Modifier.padding(4.dp),
                         horizontalArrangement = Arrangement.End,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {

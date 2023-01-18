@@ -85,14 +85,18 @@ class Login : ComponentActivity() {
                     .fillMaxWidth()
                     .height(50.dp)
                     .padding(start = 10.dp, end = 10.dp)
-                    .clickable {
+                    .clickable(enabled = true, onClick = {
                         loginWithGithub()
-                    }
+
+                    })
             ) {
 
                 Row(
                     modifier = Modifier
                         .fillMaxSize()
+                        .clickable {
+                            loginWithGithub()
+                        }
                         .padding(start = 10.dp, end = 10.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {

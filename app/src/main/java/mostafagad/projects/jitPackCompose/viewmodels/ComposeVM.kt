@@ -1,9 +1,10 @@
 package mostafagad.projects.jitPackCompose.viewmodels
 
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.snapshots.SnapshotStateList
+import android.app.Activity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -17,11 +18,11 @@ import javax.inject.Inject
 @HiltViewModel
 class ComposeVM @Inject internal constructor(private val repository: GitHubRepository) : ViewModel() {
     private val job = Job()
-    val myReposState = SnapshotStateList<Repository>()
+    private val myReposState = MutableStateFlow(emptyList<Repository>())
+    val myReposValue: StateFlow<List<Repository>> get() = myReposState
 
     suspend fun getMyRepos(userName: String) = viewModelScope.launch(job + Dispatchers.IO) {
-        val repos = repository.getMyRepos(userName = userName)
-        myReposState.addAll(repos)
+        myReposState.emit(repository.getMyRepos(userName = userName))
     }
 
 
