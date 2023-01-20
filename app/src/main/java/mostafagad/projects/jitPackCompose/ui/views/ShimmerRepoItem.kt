@@ -63,7 +63,7 @@ fun ShimmerRepo(
                             modifier = Modifier
                                 .width(0.dp)
                                 .weight(1f)
-                                .padding(end = 20.dp , top = 6.dp)
+                                .padding(end = 20.dp, top = 6.dp)
                                 .shimmerEffect(),
                             maxLines = 1
                         )
@@ -76,6 +76,7 @@ fun ShimmerRepo(
                                 modifier = Modifier.shimmerEffect(),
                                 text = "",
                             )
+                            Spacer(modifier = Modifier.width(5.dp))
 
                             Image(
                                 modifier = Modifier.shimmerEffect(),
@@ -97,7 +98,7 @@ fun ShimmerRepo(
                                 modifier = Modifier.shimmerEffect(),
                                 text = "",
                             )
-
+                            Spacer(modifier = Modifier.width(5.dp))
                             Image(
                                 modifier = Modifier.shimmerEffect(),
                                 painter = painterResource(R.drawable.ic_star_grey),

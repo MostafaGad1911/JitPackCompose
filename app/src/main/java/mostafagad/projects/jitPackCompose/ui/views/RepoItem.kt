@@ -14,8 +14,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import mostafagad.projects.jitPackCompose.data.entities.Repository
 import mostafagad.projects.compose.R
+import mostafagad.projects.jitPackCompose.data.entities.Repository
 
 @Composable
 fun RepoItem(repo: Repository) {
@@ -43,11 +43,11 @@ fun RepoItem(repo: Repository) {
                     contentScale = ContentScale.Inside
                 )
                 Text(
-                    text = repo.name,
+                    text = repo.toRepo().name.toString(),
                     modifier = Modifier
                         .width(0.dp)
                         .weight(1f)
-                        .padding(end = 20.dp , top = 4.dp),
+                        .padding(end = 20.dp, top = 4.dp),
                     maxLines = 1
                 )
                 Row(
@@ -56,9 +56,10 @@ fun RepoItem(repo: Repository) {
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        text = repo.forks_count.toString(),
+                        text = repo.toRepo().fork_num.toString(),
                     )
 
+                    Spacer(modifier = Modifier.width(5.dp))
                     Image(
                         painter = painterResource(R.drawable.ic_forked),
                         contentDescription = stringResource(
@@ -75,9 +76,9 @@ fun RepoItem(repo: Repository) {
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        text = repo.watchers_count.toString(),
+                        text = repo.toRepo().watchers.toString(),
                     )
-
+                    Spacer(modifier = Modifier.width(5.dp))
                     Image(
                         painter = painterResource(R.drawable.ic_star_yellow),
                         contentDescription = stringResource(
