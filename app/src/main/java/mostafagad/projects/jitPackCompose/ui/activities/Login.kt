@@ -91,15 +91,13 @@ class Login : ComponentActivity() {
                     })
             ) {
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clickable {
-                            loginWithGithub()
-                        }
-                        .padding(start = 10.dp, end = 10.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                Row(modifier = Modifier
+                    .fillMaxSize()
+                    .clickable {
+                        loginWithGithub()
+                    }
+                    .padding(start = 10.dp, end = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically) {
 
                     Image(
                         painter = painterResource(R.drawable.github),
@@ -128,13 +126,17 @@ class Login : ComponentActivity() {
 
 
     private fun loginWithGithub() {
-        firebaseAuth
-            .startActivityForSignInWithProvider( /* activity = */this, provider.build())
+        firebaseAuth.startActivityForSignInWithProvider( /* activity = */this, provider.build())
             .addOnSuccessListener {
+                Log.i("MY_PROFILE", it.additionalUserInfo?.profile?.get("avatar_url").toString())
                 val profile = it.additionalUserInfo?.username
-                startActivity(Intent(this, GitHubRepos::class.java).putExtra("user-name", profile))
-            }
-            .addOnFailureListener {
+//                val avatar = it.additionalUserInfo?.profile
+                startActivity(
+                    Intent(this, GitHubRepos::class.java)
+                        .putExtra("user-name", profile)
+                        .putExtra("user-avatar", it.additionalUserInfo?.profile?.get("avatar_url").toString())
+                )
+            }.addOnFailureListener {
                 // Handle failure.
                 Log.i("LOGIN_EXCEPTION", it.message.toString())
             }
